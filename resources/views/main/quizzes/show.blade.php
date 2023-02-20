@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center vh-100 align-items-center">
-        <div class="col-xl-7 col-lg-8 col-md-9 col-sm-12">
+        <div class="col-xl-6 col-lg-7 col-md-9 col-sm-11">
             <div>
                 <h1 class="text-center mb-4">{{ $quiz->title }}
                     @if($quiz->is_published)
@@ -60,7 +60,7 @@
                                     No options yet.
                                 @endif
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+{{--                            <span class="badge bg-primary rounded-pill">14</span>--}}
                         </li>
                     @endforeach
 

@@ -11,15 +11,14 @@
                     <span >( Question {{ $number }} of {{ $quiz->questions->count() }} )</span>
                 </div>
 
-{{--                @if(isset($quiz->questions[$number]))--}}
                     <form action="{{ route('main.quizzes.play.question', ['quiz' => $quiz, 'number' => isset($quiz->questions[$number]) ? $number + 1 : 0]) }}" method="post">
                         @csrf
                         @if(count($quiz->questions[$number - 1]->options) > 0)
                             <ul class="list-group">
                                 @foreach($quiz->questions[$number - 1]->options as $option)
                                     <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" name="answers[]" value="{{ $option->id }}" id="firstCheckboxStretched">
-                                        {{ $option->text }}
+                                        <input class="form-check-input me-1" type="checkbox" name="answers[]" value="{{ $option->id }}" id="{{ $option->id }}CheckboxStretched">
+                                        <label class="form-check-label stretched-link" for="{{ $option->id }}CheckboxStretched">{{ $option->text }}</label>
                                     </li>
                                     <input type="hidden" name="question_id" value="{{ $quiz->questions[$number - 1]->id }}">
                                 @endforeach
@@ -29,28 +28,7 @@
                             {{ isset($quiz->questions[$number]) ? 'Submit' : 'Submit and get results' }}
                         </button>
                     </form>
-{{--                @else--}}
-{{--                    <form action="{{ route('main.quizzes.play.getResults', ['quiz' => $quiz]) }}" method="post">--}}
-{{--                        @csrf--}}
-{{--                        @if(count($quiz->questions[$number - 1]->options) > 0)--}}
-{{--                            <ul class="list-group">--}}
-{{--                                @foreach($quiz->questions[$number - 1]->options as $option)--}}
-{{--                                    <li class="list-group-item">--}}
-{{--                                        <input class="form-check-input me-1" type="checkbox" name="answers[]" value="{{ $option->text }}" id="firstCheckboxStretched">--}}
-{{--                                        {{ $option->text }}--}}
-{{--                                    </li>--}}
-{{--                                    <input type="hidden" name="question_id" value="{{ $quiz->questions[$number - 1]->id }}">--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        @endif--}}
-{{--                        <button class="btn btn-primary px-4 mt-2" type="submit">Submit and get results</button>--}}
-{{--                    </form>--}}
-{{--                @endif--}}
 
-
-{{--                <div class="m-auto mt-4">--}}
-{{--                    {{ $questions->links() }}--}}
-{{--                </div>--}}
             </div>
 
         </div>

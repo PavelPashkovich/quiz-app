@@ -21,25 +21,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('main.index');
-Route::get('/quizzes', [QuizController::class, 'allQuizzes'])->name('main.quizzes.all');
-
-Route::get('/quizzes/{quiz}/play', [PlayController::class, 'index'])->name('main.quizzes.play.index');
-Route::get('/quizzes/{quiz}/play/results', [PlayController::class, 'getResults'])->name('main.quizzes.play.getResults');
-Route::post('/quizzes/{quiz}/play/{number}', [PlayController::class, 'play'])->name('main.quizzes.play.question');
 
 Route::middleware('auth')->group(function () {
 
-    Route::prefix('/quizzes')->name('main.')->group(function () {
-        Route::get('/my', [QuizController::class, 'myQuizzes'])->name('quizzes.my');
-        Route::get('/create', [QuizController::class, 'create'])->name('quizzes.create');
-        Route::post('/', [QuizController::class, 'store'])->name('quizzes.store');
-        Route::get('/{quiz}', [QuizController::class, 'show'])->name('quizzes.show');
-        Route::get('/{quiz}/edit', [QuizController::class, 'edit'])->name('quizzes.edit');
-        Route::put('/{quiz}/update', [QuizController::class, 'update'])->name('quizzes.update');
-        Route::delete('/{quiz}', [QuizController::class, 'destroy'])->name('quizzes.destroy');
+    Route::prefix('/quizzes')->name('main.quizzes.')->group(function () {
+        Route::get('/', [QuizController::class, 'allQuizzes'])->name('all');
+        Route::get('/my', [QuizController::class, 'myQuizzes'])->name('my');
+        Route::get('/create', [QuizController::class, 'create'])->name('create');
+        Route::post('/', [QuizController::class, 'store'])->name('store');
+        Route::get('/{quiz}', [QuizController::class, 'show'])->name('show');
+        Route::get('/{quiz}/edit', [QuizController::class, 'edit'])->name('edit');
+        Route::put('/{quiz}/update', [QuizController::class, 'update'])->name('update');
+        Route::delete('/{quiz}', [QuizController::class, 'destroy'])->name('destroy');
 
-        Route::patch('/{quiz}/toggle-publishing', [QuizController::class, 'togglePublishing'])->name('quizzes.togglePublishing');
+        Route::patch('/{quiz}/toggle-publishing', [QuizController::class, 'togglePublishing'])->name('togglePublishing');
     });
+
+    Route::prefix('/quizzes/{quiz}/play')->name('main.quizzes.play.')->group(function () {
+        Route::get('/', [PlayController::class, 'index'])->name('index');
+        Route::get('/results', [PlayController::class, 'getResults'])->name('getResults');
+//        Route::get('/see-results', [PlayController::class, 'seeResults'])->name('seeResults');
+        Route::post('/{number}', [PlayController::class, 'play'])->name('question');
+    });
+
 
     Route::name('main.')->group(function () {
         Route::get('/quizzes/{quiz}/questions', [QuestionController::class, 'index'])->name('quizzes.questions.index');

@@ -14,7 +14,6 @@
                         @csrf
                         <button type="submit" class="btn btn-primary px-4">Start</button>
                     </form>
-{{--                    <a href="{{ route('main.quizzes.play.question', ['quiz' => $quiz, 'number' => $number ?? 1]) }}"><button class="btn btn-primary px-4">Start</button></a>--}}
                 </div>
             </div>
         </div>
