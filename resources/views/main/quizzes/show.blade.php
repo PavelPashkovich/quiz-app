@@ -60,7 +60,6 @@
                                     No options yet.
                                 @endif
                             </div>
-{{--                            <span class="badge bg-primary rounded-pill">14</span>--}}
                         </li>
                     @endforeach
 

@@ -30,11 +30,7 @@
                                                             <span class="text-success"><i
                                                                     class="bi bi-file-earmark-check fs-4"></i></span>
                                                             {{ $option->text }}
-                                                            {{--                                                            @else--}}
-                                                            {{--                                                                <span class="text-danger"><i class="bi bi-file-earmark-excel fs-4"></i></span>--}}
-                                                            {{--                                                                {{ $option->text }}--}}
                                                         @endif
-                                                        {{--                                                            {{ $option->text }}--}}
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -52,11 +48,7 @@
                                                                             class="bi bi-file-earmark-excel fs-4"></i></span>
                                                                 @endif
                                                                 {{ $option->text }}
-                                                                {{--                                                            @else--}}
-                                                                {{--                                                                <span class="text-danger"><i--}}
-                                                                {{--                                                                        class="bi bi-file-earmark-excel fs-4"></i></span>--}}
                                                             @endif
-                                                            {{--                                                                {{ $option->text }}--}}
                                                         </div>
                                                     @endforeach
                                                 @endforeach

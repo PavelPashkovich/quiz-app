@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PlayRequest;
-use App\Models\Answer;
 use App\Models\Quiz;
 use App\Service\PlayService;
 use Illuminate\Contracts\Foundation\Application;
@@ -72,21 +71,4 @@ class PlayController extends Controller
         return view('main.play.results', ['results' => $results]);
     }
 
-//    public function seeResults(Quiz $quiz) {
-//        $currentAttempt = Answer::query()
-//            ->where('user_id', auth()->user()->getAuthIdentifier())
-//            ->where('quiz_id', $quiz->id)
-//            ->max('attempt');
-//
-//        $currentUserAnswersCollection = Answer::where('quiz_id', $quiz->id)
-//            ->where('user_id', auth()->user()->getAuthIdentifier())
-//            ->where('attempt', $currentAttempt)
-//            ->get();
-//        $results = [];
-//        foreach ($currentUserAnswersCollection as $answer) {
-//            $results[$answer->question_id] = $answer->user_answers;
-//        }
-//
-//        return view('main.play.seeResults', ['quiz' => $quiz, 'results' => $results]);
-//    }
 }

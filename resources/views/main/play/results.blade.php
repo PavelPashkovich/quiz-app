@@ -6,11 +6,6 @@
                 <h1 class="text-center">{{ $results['quiz']->title }}</h1>
                 <h2 class="text-center">Your result is {{ round($results['countCorrectAnswers'] / $results['countAllAnswers'] * 100) }}%</h2>
                 <span class="text-center">({{ $results['countCorrectAnswers'] }} of {{ $results['countAllAnswers'] }} correct answers)</span>
-{{--                <div class="text-center mt-2">--}}
-{{--                    <a href="{{ route('main.quizzes.play.seeResults', ['quiz' => $results['quiz']]) }}">--}}
-{{--                        <button class="btn btn-primary px-4">See results</button>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
             </div>
 
             <div class="row col-8">
@@ -38,11 +33,7 @@
                                                             <span class="text-success"><i
                                                                     class="bi bi-file-earmark-check fs-4"></i></span>
                                                             {{ $option->text }}
-                                                            {{--                                                            @else--}}
-                                                            {{--                                                                <span class="text-danger"><i class="bi bi-file-earmark-excel fs-4"></i></span>--}}
-                                                            {{--                                                                {{ $option->text }}--}}
                                                         @endif
-                                                        {{--                                                            {{ $option->text }}--}}
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -63,11 +54,7 @@
                                                                             class="bi bi-file-earmark-excel fs-4"></i></span>
                                                                 @endif
                                                                 {{ $option->text }}
-                                                                {{--                                                            @else--}}
-                                                                {{--                                                                <span class="text-danger"><i--}}
-                                                                {{--                                                                        class="bi bi-file-earmark-excel fs-4"></i></span>--}}
                                                             @endif
-                                                            {{--                                                                {{ $option->text }}--}}
                                                         </div>
                                                     @endforeach
                                                 @endforeach

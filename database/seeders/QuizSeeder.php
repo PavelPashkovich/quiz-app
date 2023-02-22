@@ -13,7 +13,7 @@ class QuizSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('quizzes')->insert([
             [

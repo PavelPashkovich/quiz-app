@@ -5,25 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuizStoreRequest;
 use App\Http\Requests\QuizUpdateRequest;
 use App\Models\Quiz;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class QuizController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function allQuizzes(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function allQuizzes(): View|Factory|Application
     {
         $quizzes = Quiz::where('is_published', true)->paginate(10);
         return view('main.quizzes.all', ['quizzes' => $quizzes]);
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     * @return Factory|View|Application
      */
-    public function myQuizzes(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function myQuizzes(): Factory|View|Application
     {
         $userId = auth()->user()->getAuthIdentifier();
         $quizzes = Quiz::where('user_id', $userId)->paginate(10);
@@ -31,9 +33,9 @@ class QuizController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function create(): View|Factory|Application
     {
         return view('main.quizzes.create');
     }
@@ -54,18 +56,18 @@ class QuizController extends Controller
 
     /**
      * @param Quiz $quiz
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function show(Quiz $quiz): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function show(Quiz $quiz): View|Factory|Application
     {
         return view('main.quizzes.show', ['quiz' => $quiz]);
     }
 
     /**
      * @param Quiz $quiz
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function edit(Quiz $quiz): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function edit(Quiz $quiz): View|Factory|Application
     {
         if ($quiz->user->id != auth()->user()->getAuthIdentifier()) {
             abort(403);

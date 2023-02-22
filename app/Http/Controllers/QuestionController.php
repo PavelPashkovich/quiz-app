@@ -5,24 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuestionStoreRequest;
 use App\Models\Question;
 use App\Models\Quiz;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class QuestionController extends Controller
 {
     /**
      * @param Quiz $quiz
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     * @return Factory|View|Application
      */
-    public function index(Quiz $quiz): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function index(Quiz $quiz): Factory|View|Application
     {
         return view('main.questions.index', ['quiz' => $quiz]);
     }
 
     /**
      * @param Quiz $quiz
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function create(Quiz $quiz): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function create(Quiz $quiz): View|Factory|Application
     {
         return view('main.questions.create', ['quiz' => $quiz]);
     }
@@ -38,7 +41,6 @@ class QuestionController extends Controller
         $data['quiz_id'] = $quiz->id;
         Question::create($data);
         return redirect()->route('main.quizzes.questions.index', ['quiz' => $quiz]);
-//        return view('main.questions.index', ['quiz' => $quiz]);
     }
 
     /**
