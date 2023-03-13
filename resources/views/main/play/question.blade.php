@@ -11,7 +11,7 @@
                     <span >( Question {{ $number }} of {{ $quiz->questions->count() }} )</span>
                 </div>
 
-                    <form action="{{ route('main.quizzes.play.question', ['quiz' => $quiz, 'number' => isset($quiz->questions[$number]) ? $number + 1 : 0]) }}" method="post">
+                    <form id="question-form" action="{{ route('main.quizzes.play.saveAnswer', ['quiz' => $quiz, 'number' => isset($quiz->questions[$number]) ? $number + 1 : 0]) }}" method="post">
                         @csrf
                         @if(count($quiz->questions[$number - 1]->options) > 0)
                             <ul class="list-group">
@@ -24,13 +24,18 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <button class="btn btn-primary px-4 mt-2" type="submit">
+                        <button class="btn btn-primary px-4 mt-2" type="submit" onclick="resetTime()">
                             {{ isset($quiz->questions[$number]) ? 'Submit' : 'Submit and get results' }}
                         </button>
+
                     </form>
+
+                <div id="timer"></div>
 
             </div>
 
         </div>
     </div>
 @endsection
+
+@vite(['resources/js/script.js'])

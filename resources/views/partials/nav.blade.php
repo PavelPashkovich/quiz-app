@@ -18,7 +18,6 @@
                             </form>
 
                         @else
-                            <a class="nav-link" href="{{ route('main.quizzes.all') }}">Choose a quiz</a>
                             <a href="{{ route('login') }}" class="nav-link">Log in</a>
                             <a href="{{ route('register') }}" class="nav-link">Register</a>
                         @endauth

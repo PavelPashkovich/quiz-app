@@ -32,24 +32,25 @@
                                 <td>
                                     <div class="container d-inline-flex justify-content-center">
                                         <a href="{{ route('main.quizzes.play.index', ['quiz' => $quiz]) }}">
-                                            <button class="btn btn-outline-primary m-1" type="button" title="Play"><i class="bi bi-play"></i></button>
+                                            <button class="btn btn-outline-primary m-1" type="button" title="Play"><i
+                                                    class="bi bi-play"></i></button>
                                         </a>
 
-                                        @if($quiz->user->id === auth()->user()->getAuthIdentifier())
-                                            <a href="{{ route('main.quizzes.edit', $quiz) }}">
-                                                <button class="btn btn-outline-warning m-1" type="button" title="Edit"><i
-                                                        class="bi bi-pencil-square"></i>
-                                                </button>
-                                            </a>
-                                            <form role="form" class="form-container" action="{{ route('main.quizzes.destroy', $quiz) }}"
-                                                  method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button id="delete_one" class="btn btn-outline-danger m-1" type="submit" title="Delete"><i
-                                                        class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
-                                        @endif
+                                        <a href="{{ route('main.quizzes.edit', $quiz) }}">
+                                            <button class="btn btn-outline-warning m-1" type="button" title="Edit"><i
+                                                    class="bi bi-pencil-square"></i>
+                                            </button>
+                                        </a>
+                                        <form role="form" class="form-container"
+                                              action="{{ route('main.quizzes.destroy', $quiz) }}"
+                                              method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button id="delete_one" class="btn btn-outline-danger m-1" type="submit"
+                                                    title="Delete"><i
+                                                    class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
 
                                     </div>
                                 </td>

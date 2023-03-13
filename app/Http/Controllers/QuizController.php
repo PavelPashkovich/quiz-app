@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuizStoreRequest;
 use App\Http\Requests\QuizUpdateRequest;
 use App\Models\Quiz;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -57,21 +58,25 @@ class QuizController extends Controller
     /**
      * @param Quiz $quiz
      * @return Application|Factory|View
+     * @throws AuthorizationException
      */
     public function show(Quiz $quiz): View|Factory|Application
     {
+        $this->authorize('view', $quiz);
         return view('main.quizzes.show', ['quiz' => $quiz]);
     }
 
     /**
      * @param Quiz $quiz
      * @return Application|Factory|View
+     * @throws AuthorizationException
      */
     public function edit(Quiz $quiz): View|Factory|Application
     {
-        if ($quiz->user->id != auth()->user()->getAuthIdentifier()) {
-            abort(403);
-        }
+//        if ($quiz->user->id != auth()->user()->getAuthIdentifier()) {
+//            abort(403);
+//        }
+        $this->authorize('update', $quiz);
         return view('main.quizzes.edit', ['quiz' => $quiz]);
     }
 
@@ -79,9 +84,11 @@ class QuizController extends Controller
      * @param QuizUpdateRequest $request
      * @param Quiz $quiz
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(QuizUpdateRequest $request, Quiz $quiz): RedirectResponse
     {
+        $this->authorize('update', $quiz);
         $data = $request->validated();
         $quiz->update($data);
         return redirect()->route('main.quizzes.questions.index', ['quiz' => $quiz]);
@@ -90,9 +97,11 @@ class QuizController extends Controller
     /**
      * @param Quiz $quiz
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(Quiz $quiz): RedirectResponse
     {
+        $this->authorize('delete', $quiz);
         $quiz->delete();
         return redirect()->back();
     }
@@ -103,6 +112,9 @@ class QuizController extends Controller
      */
     public function togglePublishing(Quiz $quiz): RedirectResponse
     {
+        if ($quiz->questions()->count() === 0) {
+            return redirect()->back()->with('warning', 'Your quiz must have at list one question.');
+        }
         foreach ($quiz->questions as $question) {
                 if ($question->options()->where('is_correct', true)->count() == 0) {
                     return redirect()->back()->with('warning', 'Your answer options must have at list one correct answer.');

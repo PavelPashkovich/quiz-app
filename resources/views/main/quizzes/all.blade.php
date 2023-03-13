@@ -29,7 +29,7 @@
                                             <button class="btn btn-outline-primary m-1" type="button" title="Play"><i class="bi bi-play"></i></button>
                                         </a>
 
-                                        @if($quiz->user->id === auth()->user()->getAuthIdentifier())
+                                        @can('view', $quiz)
                                             <a href="{{ route('main.quizzes.edit', $quiz) }}">
                                                 <button class="btn btn-outline-warning m-1" type="button" title="Edit"><i
                                                         class="bi bi-pencil-square"></i>
@@ -57,7 +57,7 @@
                                                     <button class="btn btn-link text-danger" title="Click to publish"><i class="bi bi-bookmark-x fs-4"></i></button>
                                                 </form>
                                             @endif
-                                        @endif
+                                        @endcan
 
                                     </div>
                                 </td>

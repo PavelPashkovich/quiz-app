@@ -4,10 +4,13 @@
         <div class="row justify-content-center vh-100 align-items-center">
             <div class="col-xl-5 col-lg-7 col-md-9 col-sm-12">
                 <div>
-                    <h1 class="text-center mb-4">{{ $question->text }}</h1>
+                    <h1 class="text-center mb-4">{{ $question->quiz->title }}</h1>
                 </div>
                 <div>
-                    <h3 class="text-center mb-4">Create a new option!</h3>
+                    <h2 class="text-center mb-4">{{ $question->text }}</h2>
+                </div>
+                <div>
+                    <h4 class="text-center mb-4">Create a new option!</h4>
                 </div>
                 <form action="{{ route('main.questions.options.store', ['question' => $question]) }}" method="post">
                     @csrf

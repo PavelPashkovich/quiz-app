@@ -4,7 +4,10 @@
     <div class="row justify-content-center vh-100 align-items-center">
         <div class="col-xl-7 col-lg-8 col-md-9 col-sm-12">
             <div>
-                <h1 class="text-center mb-4">{{ $question->text }}</h1>
+                <h1 class="text-center mb-4">{{ $question->quiz->title }}</h1>
+            </div>
+            <div>
+                <h2 class="text-center mb-4">{{ $question->text }}</h2>
             </div>
             <div>
                 <a class="nav-link" href="{{ route('main.questions.options.create', ['question' => $question] )}}">
@@ -35,7 +38,6 @@
                                 <td>
                                     <div class="container d-inline-flex justify-content-center">
 
-                                        @if($question->quiz->user->id === auth()->user()->getAuthIdentifier())
                                             <form role="form" class="form-container" action="{{ route('main.options.destroy', $option) }}"
                                                   method="post">
                                                 @method('delete')
@@ -44,7 +46,6 @@
                                                         class="bi bi-trash"></i>
                                                 </button>
                                             </form>
-                                        @endif
 
                                     </div>
                                 </td>

@@ -28,6 +28,5 @@
     @include('partials.flash-message')
     @yield('content')
 </div>
-
 </body>
 </html>

@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/quizzes/{quiz}/play')->name('main.quizzes.play.')->group(function () {
         Route::get('/', [PlayController::class, 'index'])->name('index');
         Route::get('/results', [PlayController::class, 'getResults'])->name('getResults');
-//        Route::get('/see-results', [PlayController::class, 'seeResults'])->name('seeResults');
-        Route::post('/{number}', [PlayController::class, 'play'])->name('question');
+        Route::get('/{number}', [PlayController::class, 'playQuestion'])->name('playQuestion');
+        Route::post('/{number}', [PlayController::class, 'saveAnswer'])->name('saveAnswer');
     });
 
 
@@ -75,9 +75,9 @@ Auth::routes();
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 //Route::get('/logout', [ProfileController::class, 'logout'])->name('profile.loqout');

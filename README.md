@@ -59,7 +59,7 @@ Follow these steps to install the quiz-app application:
 - Install and run npm
 ```bash
   npm install
-  npm run
+  npm run dev
 ```  
 
 - Run migrations and seeders

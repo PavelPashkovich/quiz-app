@@ -11,6 +11,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class PlayController extends Controller
 {
@@ -20,26 +22,42 @@ class PlayController extends Controller
      */
     public function index(Quiz $quiz): Factory|View|Application
     {
+        session()->forget('quiz');
         return view('main.play.index', ['quiz' => $quiz]);
+    }
+
+    /**
+     * @param Quiz $quiz
+     * @param $number
+     * @return View|Factory|RedirectResponse|Application
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function playQuestion(Quiz $quiz, $number): View|Factory|RedirectResponse|Application
+    {
+        $answersCount = session()->get("quiz.$quiz->id") ? count(session()->get("quiz.$quiz->id")) : 0;
+        if ($number <= $answersCount) {
+            $number = $answersCount + 1;
+            return redirect()->action([PlayController::class, 'playQuestion'], ['quiz' => $quiz, 'number' => $number]);
+        }
+        return view('main.play.question', ['quiz' => $quiz, 'number' => $number]);
     }
 
     /**
      * @param PlayRequest $request
      * @param Quiz $quiz
      * @param $number
-     * @return Application|Factory|View|RedirectResponse
+     * @return View|Factory|RedirectResponse|Application
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function play(PlayRequest $request, Quiz $quiz, $number): View|Factory|RedirectResponse|Application
+    public function saveAnswer(PlayRequest $request, Quiz $quiz, $number): View|Factory|RedirectResponse|Application
     {
         Cache::store()->tags(['quizzes'])->add($quiz->id, $quiz, now()->addDays(10));
         $quiz = Cache::store('redis')->tags(['quizzes'])->get($quiz->id);
 
-        if ($number == 1) {
-            $request->session()->forget('quiz');
-        }
-
         $data = $request->validated();
-        $questionId = $data['question_id'] ?? null;
+        $questionId = $data['question_id'];
         $answers = $data['answers'] ?? [];
 
         if ($questionId) {
@@ -49,7 +67,8 @@ class PlayController extends Controller
         if (!$number) {
             return redirect()->route('main.quizzes.play.getResults', ['quiz' => $quiz]);
         }
-        return view('main.play.question', ['quiz' => $quiz, 'number' => $number]);
+
+        return $this->playQuestion($quiz, $number);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuestionStoreRequest;
 use App\Models\Question;
 use App\Models\Quiz;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,9 +16,11 @@ class QuestionController extends Controller
     /**
      * @param Quiz $quiz
      * @return Factory|View|Application
+     * @throws AuthorizationException
      */
     public function index(Quiz $quiz): Factory|View|Application
     {
+        $this->authorize('view', $quiz);
         return view('main.questions.index', ['quiz' => $quiz]);
     }
 
@@ -27,6 +30,7 @@ class QuestionController extends Controller
      */
     public function create(Quiz $quiz): View|Factory|Application
     {
+        $this->authorize('create', $quiz);
         return view('main.questions.create', ['quiz' => $quiz]);
     }
 
@@ -49,6 +53,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question): RedirectResponse
     {
+        $this->authorize('delete', $question);
         $question->delete();
         return redirect()->back();
     }
